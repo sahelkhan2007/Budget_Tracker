@@ -22,134 +22,155 @@ budget tracker pseudocode and IPO chart
 
  ## 3. Pseudocode
 
+Module Main()
+
+DECLARE Real design_income = 0
+DECLARE Real coding_income = 0
+DECLARE Real documentation_income = 0
+
+DECLARE Real software_expense = 0
+DECLARE Real equipment_expense = 0
+DECLARE Real workspace_expense = 0
+
 DECLARE Real total_income = 0
 DECLARE Real total_expenses = 0
 DECLARE Real net_balance = 0
+
 DECLARE Integer main_choice = 0
 DECLARE Integer sub_choice = 0
 DECLARE Real amount = 0
-DECLARE String category_name = ""
 
-DISPLAY "=========================================="
-DISPLAY "         PERSONAL BUDGET TRACKER"
-DISPLAY "=========================================="
+    DISPLAY "=========================================="
+    DISPLAY "         PERSONAL BUDGET TRACKER"
+    DISPLAY "=========================================="
 
-WHILE main_choice != 4
+    WHILE main_choice != 4
 
-    DISPLAY "--- MAIN MENU ---"
-    DISPLAY "1. Log Income"
-    DISPLAY "2. Log Expense"
-    DISPLAY "3. View Financial Summary"
-    DISPLAY "4. Exit"
-    DISPLAY "Enter your choice (1-4):"
-    INPUT main_choice
-
-    WHILE main_choice < 1 OR main_choice > 4
-        DISPLAY "Invalid. Choice must be 1, 2, 3, or 4. Try Again:"
+        DISPLAY "--- MAIN MENU ---"
+        DISPLAY "1. Log Income"
+        DISPLAY "2. Log Expense"
+        DISPLAY "3. View Financial Summary"
+        DISPLAY "4. Exit"
+        DISPLAY "Enter your choice (1-4):"
         INPUT main_choice
+
+        WHILE main_choice < 1 OR main_choice > 4
+            DISPLAY "Invalid. Choice must be 1, 2, 3, or 4. Try Again:"
+            INPUT main_choice
+        END WHILE
+
+
+        IF main_choice == 1 THEN
+
+            DISPLAY "--- INCOME MENU ---"
+            DISPLAY "1. Design"
+            DISPLAY "2. Coding"
+            DISPLAY "3. User Documentation"
+            DISPLAY "Enter income category:"
+            INPUT sub_choice
+
+            WHILE sub_choice < 1 OR sub_choice > 3
+                DISPLAY "Invalid. Please enter 1, 2, or 3. Try Again!"
+                INPUT sub_choice
+            END WHILE
+
+            DISPLAY "Enter income amount ($):"
+            INPUT amount
+
+            WHILE amount < 0
+                DISPLAY "Invalid. Please enter amount >= 0:"
+                INPUT amount
+            END WHILE
+
+            IF sub_choice == 1 THEN
+                SET category_name = "Design"
+                SET design_income = design_income + amount
+
+            ELSE IF sub_choice == 2 THEN
+                SET category_name = "Coding"
+                SET coding_income = coding_income + amount
+
+            ELSE
+                SET category_name = "User Documentation"
+                SET documentation_income = documentation_income + amount
+            END IF
+
+            DISPLAY "Successfully added $ ", amount, " for ", category_name, "."
+
+
+        ELSE IF main_choice == 2 THEN
+
+            DISPLAY "--- EXPENSE MENU ---"
+            DISPLAY "1. Software"
+            DISPLAY "2. Equipment"
+            DISPLAY "3. Workspace"
+            DISPLAY "Enter expense category:"
+            INPUT sub_choice
+
+            WHILE sub_choice < 1 OR sub_choice > 3
+                DISPLAY "Invalid. Please enter 1, 2, or 3. Try Again!"
+                INPUT sub_choice
+            END WHILE
+
+            DISPLAY "Enter expense amount ($):"
+            INPUT amount
+
+            WHILE amount < 0
+                DISPLAY "Invalid. Please enter amount >= 0:"
+                INPUT amount
+            END WHILE
+
+            IF sub_choice == 1 THEN
+                SET category_name = "Software"
+                SET software_expense = software_expense + amount
+
+            ELSE IF sub_choice == 2 THEN
+                SET category_name = "Equipment"
+                SET equipment_expense = equipment_expense + amount
+
+            ELSE
+                SET category_name = "Workspace"
+                SET workspace_expense = workspace_expense + amount
+            END IF
+
+            DISPLAY "Successfully added $ ", amount, " for ", category_name, "."
+
+
+        ELSE IF main_choice == 3 THEN
+
+            SET total_income = design_income + coding_income + documentation_income
+
+            SET total_expenses = software_expense + equipment_expense + workspace_expense
+
+            SET net_balance = total_income - total_expenses
+
+            DISPLAY "=========================================="
+            DISPLAY "          FINANCIAL SUMMARY"
+            DISPLAY "=========================================="
+            DISPLAY "Total Income:   $", total_income
+            DISPLAY "Total Expenses: $", total_expenses
+            DISPLAY "Net Balance:    $", net_balance
+
+            IF net_balance > 0 THEN
+                DISPLAY "Status: You are profitable this month!"
+
+            ELSE IF net_balance < 0 THEN
+                DISPLAY "Status: You had a loss this month!"
+
+            ELSE
+                DISPLAY "Status: You broke even this month!"
+            END IF
+
+            DISPLAY "=========================================="
+
+
+        ELSE IF main_choice == 4 THEN
+
+            DISPLAY "Thank you for using Personal Budget Tracker. Goodbye!"
+            BREAK
+
+        END IF
+
     END WHILE
-
-
-    IF main_choice == 1 THEN
-
-        DISPLAY "--- INCOME MENU ---"
-        DISPLAY "1. Design"
-        DISPLAY "2. Coding"
-        DISPLAY "3. User Documentation"
-        DISPLAY "Enter income category:"
-        INPUT sub_choice
-
-        WHILE sub_choice < 1 OR sub_choice > 3
-            DISPLAY "Invalid. Please enter 1, 2, or 3. Try Again!"
-            INPUT sub_choice
-        END WHILE
-
-        IF sub_choice == 1 THEN
-            SET category_name = "Design"
-        ELSE IF sub_choice == 2 THEN
-            SET category_name = "Coding"
-        ELSE
-            SET category_name = "User Documentation"
-        END IF
-
-        DISPLAY "Enter income amount ($):"
-        INPUT amount
-
-        WHILE amount < 0
-            DISPLAY "Invalid. Please enter amount >= 0:"
-            INPUT amount
-        END WHILE
-
-        SET total_income = total_income + amount
-
-        DISPLAY "Successfully added $ ", amount, " for ", category_name, "."
-
-
-    ELSE IF main_choice == 2 THEN
-
-        DISPLAY "--- EXPENSE MENU ---"
-        DISPLAY "1. Software"
-        DISPLAY "2. Equipment"
-        DISPLAY "3. Workspace"
-        DISPLAY "Enter expense category:"
-        INPUT sub_choice
-
-        WHILE sub_choice < 1 OR sub_choice > 3
-            DISPLAY "Invalid. Please enter 1, 2, or 3. Try Again!"
-            INPUT sub_choice
-        END WHILE
-
-        IF sub_choice == 1 THEN
-            SET category_name = "Software"
-        ELSE IF sub_choice == 2 THEN
-            SET category_name = "Equipment"
-        ELSE
-            SET category_name = "Workspace"
-        END IF
-
-        DISPLAY "Enter expense amount ($):"
-        INPUT amount
-
-        WHILE amount < 0
-            DISPLAY "Invalid. Please enter amount >= 0:"
-            INPUT amount
-        END WHILE
-
-        SET total_expenses = total_expenses + amount
-
-        DISPLAY "Successfully added $ ", amount, " for ", category_name, "."
-
-
-    ELSE IF main_choice == 3 THEN
-
-        SET net_balance = total_income - total_expenses
-
-        DISPLAY "=========================================="
-        DISPLAY "          FINANCIAL SUMMARY"
-        DISPLAY "=========================================="
-        DISPLAY "Total Income:   $", total_income
-        DISPLAY "Total Expenses: $", total_expenses
-        DISPLAY "Net Balance:    $", net_balance
-
-        IF net_balance > 0 THEN
-            DISPLAY "Status: You are profitable this month!"
-        ELSE IF net_balance < 0 THEN
-            DISPLAY "Status: You had a loss this month!"
-        ELSE
-            DISPLAY "Status: You broke even this month!"
-        END IF
-
-        DISPLAY "=========================================="
-
-
-    ELSE IF main_choice == 4 THEN
-
-        DISPLAY "Thank you for using Personal Budget Tracker. Goodbye!"
-        BREAK
-
-    END IF
-
-END WHILE
-End Module
 
 End Module
